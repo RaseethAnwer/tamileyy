@@ -91,6 +91,8 @@ body {
     justify-content: center;
     text-align: center;
     padding: 20px;
+    position: relative;
+    /* Ensure tease quote is positioned relative to this section */
 }
 
 .banner {
@@ -145,12 +147,49 @@ body {
     text-shadow: 0 0 15px var(--glow-color);
 }
 
+/* No Button Container */
+.no-btn-container {
+    position: relative;
+    display: inline-block;
+    transition: all 0.2s ease;
+}
+
+/* Response to user request: Tease message stays with the button */
 .tease-quote {
-    height: 30px;
+    position: absolute;
+    bottom: 100%;
+    /* Position above the button */
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    margin-bottom: 10px;
+    font-size: 0.9rem;
     font-style: italic;
-    color: var(--secondary-color);
-    margin-bottom: 30px;
-    font-weight: 300;
+    color: var(--primary-color);
+    font-weight: 600;
+    text-shadow: 0 0 5px rgba(0, 0, 0, 0.8);
+    background: rgba(0, 20, 0, 0.9);
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid rgba(0, 255, 65, 0.3);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    text-align: center;
+    white-space: normal;
+    z-index: 100;
+}
+
+/* Add a small arrow to the speech bubble */
+.tease-quote::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: rgba(0, 255, 65, 0.3) transparent transparent transparent;
 }
 
 .btn-group {
@@ -159,6 +198,8 @@ body {
     position: relative;
     justify-content: center;
     min-height: 60px;
+    margin-top: 60px;
+    /* Give space for the centered message */
 }
 
 .btn {
@@ -169,12 +210,16 @@ body {
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     font-weight: 600;
+    -webkit-tap-highlight-color: transparent;
+    /* Remove tap highlight on mobile */
 }
 
 .btn-yes {
     background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
     color: #000;
     box-shadow: 0 0 20px var(--secondary-color);
+    z-index: 5;
+    /* Ensure it stays clickable */
 }
 
 .btn-yes:hover {
@@ -187,6 +232,46 @@ body {
     border: 2px solid var(--secondary-color);
     color: var(--text-color);
     position: relative;
+    z-index: 5;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .banner-inner {
+        font-size: 60px;
+    }
+
+    .main-question {
+        font-size: 2rem;
+        padding: 0 10px;
+    }
+
+    .tease-quote {
+        font-size: 1.2rem;
+        width: 85%;
+        top: 50%;
+    }
+
+    .btn {
+        padding: 12px 30px;
+        font-size: 1rem;
+    }
+
+    .btn-group {
+        gap: 15px;
+    }
+
+    .gallery {
+        grid-template-columns: 1fr;
+    }
+
+    .surprise-card {
+        min-height: 350px;
+    }
+
+    .layer-content h2 {
+        font-size: 1.5rem;
+    }
 }
 
 /* Phase 2 Styles */
@@ -291,31 +376,49 @@ body {
     box-shadow: 0 0 30px rgba(0, 255, 65, 0.3);
 }
 
-/* Split Card - Image splits on hover to reveal content */
-.split-card {
+/* Flip Card - Text initially, flips to Image on hover */
+.flip-card {
+    background-color: transparent;
+    width: 100%;
+    height: 100%;
+    perspective: 1000px;
+}
+
+.flip-card-inner {
     position: relative;
     width: 100%;
     height: 100%;
-    cursor: pointer;
+    text-align: center;
+    transition: transform 0.8s;
+    transform-style: preserve-3d;
+}
+
+.flip-card:hover .flip-card-inner {
+    transform: rotateY(180deg);
+}
+
+.flip-card-front,
+.flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    border-radius: 12px;
     overflow: hidden;
 }
 
-/* The reveal layer behind the split halves */
-.split-reveal {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+/* Front: Text/Icon (matches old split-reveal style) */
+.flip-card-front {
+    background: linear-gradient(135deg, #001a00, #003300, #001a00);
+    color: var(--text-color);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, #001a00, #003300, #001a00);
-    z-index: 1;
 }
 
-.split-reveal span {
+.flip-card-front span {
     font-size: 2.5rem;
     display: block;
     margin-bottom: 8px;
@@ -323,74 +426,25 @@ body {
     filter: drop-shadow(0 0 10px var(--glow-color));
 }
 
-.split-reveal p {
+.flip-card-front p {
     font-family: 'Playfair Display', serif;
     font-size: 1rem;
     color: var(--primary-color);
     text-shadow: 0 0 10px var(--glow-color);
     letter-spacing: 2px;
     text-transform: uppercase;
-    opacity: 0;
-    transform: translateY(10px);
-    transition: opacity 0.5s ease 0.2s, transform 0.5s ease 0.2s;
 }
 
-.split-card:hover .split-reveal p {
-    opacity: 1;
-    transform: translateY(0);
+/* Back: Image */
+.flip-card-back {
+    background-color: #000;
+    transform: rotateY(180deg);
 }
 
-/* Top half of the image */
-.split-top {
-    position: absolute;
-    top: 0;
-    left: 0;
+.flip-card-back img {
     width: 100%;
-    height: 50%;
-    overflow: hidden;
-    z-index: 2;
-    transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.split-top img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 200%;
-    /* Double height so it shows top half */
+    height: 100%;
     object-fit: cover;
-}
-
-/* Bottom half of the image */
-.split-bottom {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 50%;
-    overflow: hidden;
-    z-index: 2;
-    transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.split-bottom img {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 200%;
-    /* Double height so it shows bottom half */
-    object-fit: cover;
-}
-
-/* On hover: split the image apart */
-.split-card:hover .split-top {
-    transform: translateY(-100%);
-}
-
-.split-card:hover .split-bottom {
-    transform: translateY(100%);
 }
 
 .gallery-img {
@@ -947,4 +1001,23 @@ body {
         grid-template-columns: repeat(2, 1fr);
         gap: 12px;
     }
+}
+
+#music-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #0f9d58;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 12px 18px;
+    font-size: 14px;
+    cursor: pointer;
+    box-shadow: 0 0 15px rgba(15, 157, 88, 0.6);
+    z-index: 999;
+}
+
+#music-btn:hover {
+    background: #13c46a;
 }
