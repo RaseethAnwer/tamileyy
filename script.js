@@ -13,7 +13,9 @@ const quotes = [
 ];
 
 // Elements
+// Elements
 const noBtn = document.getElementById('no-btn');
+const noBtnContainer = document.getElementById('no-btn-container');
 const yesBtn = document.getElementById('yes-btn');
 const teaseQuote = document.getElementById('tease-quote');
 const phase1 = document.getElementById('phase-1');
@@ -32,17 +34,18 @@ noBtn.addEventListener('touchstart', (e) => {
 
 function moveButton() {
     // Random position
-    const padding = 50;
-    const maxX = window.innerWidth - noBtn.offsetWidth - padding;
-    const maxY = window.innerHeight - noBtn.offsetHeight - padding;
+    const padding = 20;
+    // Calculate max bounds based on window size minus element size
+    const maxX = window.innerWidth - noBtnContainer.offsetWidth - padding;
+    const maxY = window.innerHeight - noBtnContainer.offsetHeight - padding;
 
-    const randomX = Math.random() * maxX;
-    const randomY = Math.random() * maxY;
+    const randomX = Math.max(padding, Math.random() * maxX);
+    const randomY = Math.max(padding, Math.random() * maxY);
 
-    noBtn.style.position = 'fixed';
-    noBtn.style.left = randomX + 'px';
-    noBtn.style.top = randomY + 'px';
-    noBtn.style.zIndex = '1000';
+    noBtnContainer.style.position = 'fixed';
+    noBtnContainer.style.left = randomX + 'px';
+    noBtnContainer.style.top = randomY + 'px';
+    noBtnContainer.style.zIndex = '1000';
 
     // Change quote
     const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
@@ -404,5 +407,33 @@ function addBgHearts() {
     }, 1000);
 }
 
+
 addBgHearts();
+
+const music = document.getElementById("bg-music");
+const musicBtn = document.getElementById("music-btn");
+
+let isPlaying = false;
+
+musicBtn.addEventListener("click", () => {
+    if (!isPlaying) {
+        music.play();
+        musicBtn.innerText = "🔇 Pause Music";
+    } else {
+        music.pause();
+        musicBtn.innerText = "🔊 Play Music";
+    }
+    isPlaying = !isPlaying;
+});
+
+/* Start music after YES button */
+if (yesBtn) {
+    yesBtn.addEventListener("click", () => {
+        music.play().catch((error) => {
+            console.log("Music play blocked or failed:", error);
+        });
+        isPlaying = true;
+        musicBtn.innerText = "🔇 Pause Music";
+    });
+}
 
