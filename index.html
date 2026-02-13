@@ -18,6 +18,16 @@
     <div class="glow-bg"></div>
     <div class="heart-container" id="heart-container"></div>
 
+    <!-- Background Music -->
+    <audio id="bg-music" loop>
+        <source src="./music/Thangame-Thangame-MassTamilan.dev.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- Music Control Button -->
+    <button id="music-btn">🔊 Play Music</button>
+
+
     <main>
         <!-- PHASE 1: THE QUESTION -->
         <section id="phase-1" class="active">
@@ -30,10 +40,12 @@
 
             <div class="question-container">
                 <h1 class="main-question">Tamileyy 💚, <br>will you be my Valentine?</h1>
-                <p id="tease-quote" class="tease-quote"></p>
                 <div class="btn-group">
                     <button id="yes-btn" class="btn btn-yes">YES 😍</button>
-                    <button id="no-btn" class="btn btn-no">NO 😜</button>
+                    <div id="no-btn-container" class="no-btn-container">
+                        <p id="tease-quote" class="tease-quote"></p>
+                        <button id="no-btn" class="btn btn-no">NO 😜</button>
+                    </div>
                 </div>
             </div>
         </section>
@@ -60,69 +72,61 @@
                             <div class="gallery" id="photo-gallery">
                                 <!-- Photo 1 -->
                                 <div class="gallery-item">
-                                    <div class="split-card">
-                                        <div class="split-reveal">
-                                            <span>💚</span>
-                                            <p>Us Forever</p>
-                                        </div>
-                                        <div class="split-top">
-                                            <img src="images/WhatsApp Image 2026-02-13 at 11.44.41 (1).jpeg"
-                                                alt="Memory 1" class="gallery-img">
-                                        </div>
-                                        <div class="split-bottom">
-                                            <img src="images/WhatsApp Image 2026-02-13 at 11.44.41 (1).jpeg"
-                                                alt="Memory 1" class="gallery-img">
+                                    <div class="flip-card">
+                                        <div class="flip-card-inner">
+                                            <div class="flip-card-front">
+                                                <span>💚</span>
+                                                <p>Us Forever</p>
+                                            </div>
+                                            <div class="flip-card-back">
+                                                <img src="images/WhatsApp Image 2026-02-13 at 11.44.41 (1).jpeg"
+                                                    alt="Memory 1" class="gallery-img">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                                 <!-- Photo 2 -->
                                 <div class="gallery-item">
-                                    <div class="split-card">
-                                        <div class="split-reveal">
-                                            <span>✨</span>
-                                            <p>My Favorite</p>
-                                        </div>
-                                        <div class="split-top">
-                                            <img src="images/WhatsApp Image 2026-02-13 at 11.44.41.jpeg" alt="Memory 2"
-                                                class="gallery-img">
-                                        </div>
-                                        <div class="split-bottom">
-                                            <img src="images/WhatsApp Image 2026-02-13 at 11.44.41.jpeg" alt="Memory 2"
-                                                class="gallery-img">
+                                    <div class="flip-card">
+                                        <div class="flip-card-inner">
+                                            <div class="flip-card-front">
+                                                <span>✨</span>
+                                                <p>My Favorite</p>
+                                            </div>
+                                            <div class="flip-card-back">
+                                                <img src="images/WhatsApp Image 2026-02-13 at 11.44.41.jpeg"
+                                                    alt="Memory 2" class="gallery-img">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                                 <!-- Photo 3 -->
                                 <div class="gallery-item">
-                                    <div class="split-card">
-                                        <div class="split-reveal">
-                                            <span>🌹</span>
-                                            <p>So Beautiful</p>
-                                        </div>
-                                        <div class="split-top">
-                                            <img src="images/WhatsApp Image 2026-02-13 at 11.44.42.jpeg" alt="Memory 3"
-                                                class="gallery-img">
-                                        </div>
-                                        <div class="split-bottom">
-                                            <img src="images/WhatsApp Image 2026-02-13 at 11.44.42.jpeg" alt="Memory 3"
-                                                class="gallery-img">
+                                    <div class="flip-card">
+                                        <div class="flip-card-inner">
+                                            <div class="flip-card-front">
+                                                <span>🌹</span>
+                                                <p>So Beautiful</p>
+                                            </div>
+                                            <div class="flip-card-back">
+                                                <img src="images/WhatsApp Image 2026-02-13 at 11.44.42.jpeg"
+                                                    alt="Memory 3" class="gallery-img">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                                 <!-- Photo 4 -->
                                 <div class="gallery-item">
-                                    <div class="split-card">
-                                        <div class="split-reveal">
-                                            <span>💝</span>
-                                            <p>My Love</p>
-                                        </div>
-                                        <div class="split-top">
-                                            <img src="images/WhatsApp Image 2026-02-13 at 11.44.43.jpeg" alt="Memory 4"
-                                                class="gallery-img">
-                                        </div>
-                                        <div class="split-bottom">
-                                            <img src="images/WhatsApp Image 2026-02-13 at 11.44.43.jpeg" alt="Memory 4"
-                                                class="gallery-img">
+                                    <div class="flip-card">
+                                        <div class="flip-card-inner">
+                                            <div class="flip-card-front">
+                                                <span>💝</span>
+                                                <p>My Love</p>
+                                            </div>
+                                            <div class="flip-card-back">
+                                                <img src="images/WhatsApp Image 2026-02-13 at 11.44.43.jpeg"
+                                                    alt="Memory 4" class="gallery-img">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
